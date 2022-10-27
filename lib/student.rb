@@ -13,11 +13,11 @@ class Student
     @scores << score
   end
 
-  def total_grades
-    @scores += log_score(score)
-  end
-
   def grade
-    total_grades / @scores.count
+    avg_grade = 0
+    @scores.each do |score|
+      avg_grade += score
+    end
+    avg_grade / @scores.count.to_f
   end
 end
