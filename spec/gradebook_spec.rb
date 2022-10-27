@@ -60,5 +60,34 @@ RSpec.describe Gradebook do
       })
   end
 
+  it 'can list students below grading threshold' do
+    gradebook = Gradebook.new("Ms. Moore")
+    calculus = Course.new("Calculus", 2)
+    english = Course.new("English", 3)
+    morgan = Student.new({name: "Morgan", age: 21})
+    jim = Student.new({name: "Jim", age: 16})
+    nicole = Student.new({name: "Nicole", age: 19})
+    sam = Student.new({name: "Sam", age: 24})
 
+    gradebook.add_course(calculus)
+    gradebook.add_course(english)
+
+    calculus.enroll(morgan)
+    calculus.enroll(jim)
+    english.enroll(nicole)
+    english.enroll(sam)
+
+    morgan.log_score(92)
+    morgan.log_score(78)
+    jim.log_score(100)
+    jim.log_score(54)
+    jim.log_score(64)
+    nicole.log_score(80)
+    nicole.log_score(72)
+    sam.log_score(93)
+    sam.log_score(96)
+    sam.log_score(89)
+    
+    expect(gradebook.grade_threshold).to eq([jim, nicole])
+  end
 end
